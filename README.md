@@ -7,6 +7,7 @@
  5.1 Create 1x **NAT Gateway** for Private Subnets  <br>
  6.  Add **Default Route** to route table CO-PoC-Public towards IGW <br>
  6.1 Add **Default Route** to route table CO-PoC-Private towards NATGW <br>
+ 7.  Create **VPN Gateway** as site to site VPN    
  
 ## Key Notes
  
