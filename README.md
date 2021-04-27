@@ -1,15 +1,14 @@
 ## Steps
- 1.  Create **a VPC** with **10.252.0.0/20** CIDR <br> 
- 2.  Create **Private, Public and MGMT Subnets** in two Availability zones.<br>
- 3.  Create 3x **Routing Tables** and associate it with **Private** and **Public** subnets <br> 
+ 1.  Create **CO-PoC-VPC** with **10.252.0.0/20** CIDR <br> 
+ 2.  Create ** 8x Private, 2x Public and 4x MGMT Subnets** in two Availability Zones.<br>
+ 3.  Create 3x **Routing Tables** and associate them with **Private**, **Public** and **MGMT** subnets <br> 
  4.  Create 1x **Internet Gateway** for Public Subnets <br> 
  5.  Create 1x **Elastic IPs (EIP)** to use in NAT Gateway <br>
- 5.1.Create 1x **NAT Gateway** for Private Subnets  <br>
+ 5.1 Create 1x **NAT Gateway** for Private Subnets  <br>
  6.  Add **Default Route** to route table CO-PoC-Public towards IGW <br>
- 6.1 Add **Default Route** to route table CO-PoC-Private towards NGW <br>
- 7.  **Route Table Association** of Public, Private and Mgmt subnets 
-
-
+ 6.1 Add **Default Route** to route table CO-PoC-Private towards NATGW <br>
+ 
+## Key Notes
  
 ***count -*** The number of identical resources to create. Here, **count** parameter is being used to create two subnets.  **count = 2** could be used, however what if in future another subnet required in the third AZ. Therefore, **length** function with **count** is better option. <br>
 

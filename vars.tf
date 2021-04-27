@@ -27,7 +27,7 @@ variable "poc-public-subnets" {
 
 variable "poc-mgmt-subnets" {
   type = list
-  default = ["100.64.0.0/27", "100.64.0.96/27"]
+  default = ["100.64.0.0/27", "100.64.0.32/27", "100.64.0.64/27", "100.64.0.96/27" ]
 }
 variable "private-ip" {
   type = list

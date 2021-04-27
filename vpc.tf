@@ -38,12 +38,12 @@ resource "aws_subnet" "poc-public-subnets" {
 resource "aws_subnet" "poc-mgmt-subnets" {
   vpc_id = aws_vpc.co-poc-vpc.id
   count = length(var.poc-mgmt-subnets)
-  cidr_block = element(var.poc-mgmt-subnets,count.index )
-  availability_zone = element(var.azs,count.index )
+  cidr_block = element(var.poc-mgmt-subnets, count.index )
+  availability_zone = element(var.azs , count.index )
 
   tags = {
 
-    Name = "PoC=MGMT-SN-${count.index+1}"
+    Name = "PoC-MGMT-SN-${count.index+1}"
   }
 }
 
@@ -95,12 +95,7 @@ resource "aws_eip" "nat-eip" {
   }
 }
 
-#resource "aws_eip_association" "eip-assoc" {
-#  instance_id = aws_instance.public-ec2.*.id
-#  allocation_id = aws_eip.nat-eip.id
-#
-#}
-#
+
 # Step 5.1: Create 1x NAT Gateway
 resource "aws_nat_gateway" "poc-nat-gateway" {
   #count         = length(var.azs)
@@ -150,46 +145,3 @@ resource "aws_route_table_association" "mgmt-subnet-association" {
   route_table_id = aws_route_table.poc-mgmt-rt.id
 }
 
-# Step 8: Security Group
-
-#resource "aws_security_group" "HTTPS" {
-#  cidr_block = ""
-#  vpc_id = aws_vpc.co-poc-vpc.id
-#}
-
-
-# Step 9: Network Interface
-
-resource "aws_network_interface" "public-nic" {
-
-  count = length(var.private-ip)
-  subnet_id = element(aws_subnet.poc-public-subnets.*.id, count.index)
-  private_ip = element(var.private-ip,count.index )
-
-  #security_groups = [aws_security_group.HTTPS.id]
-
-  tags = {
-    Name = "Public NIC-${count.index+1}"
-  }
-}
-
-# Step 10: TEST Spin up EC2 Instance in Public
-
-#resource "aws_instance" "public-ec2" {
-#  count = 1
-#  ami = "ami-0fbec3e0504ee1970"
-#  instance_type = var.instance_type
-#  availability_zone = "eu-west-2a"
-#  key_name = var.key_pairs
-#  associate_public_ip_address = true
-#
-# # network_interface {
-# #   device_index = 0
-# #   network_interface_id = element (aws_network_interface.public-nic.*.id,count.index)
-##
-#  #}
-#
-#  tags = {
-#    Name = "TEST-EC2-PUBLIC"
-#  }
-#}
