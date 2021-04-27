@@ -66,9 +66,8 @@ resource "aws_route_table" "poc-private-rt" {
 
 resource "aws_route_table" "poc-mgmt-rt" {
   vpc_id = aws_vpc.co-poc-vpc.id
-
+  depends_on = [aws_vpc_ipv4_cidr_block_association.additional-cidr-vpc, aws_subnet.poc-mgmt-subnets]
   tags = {
-
     Name = "CO-PoC-Mgmt"
   }
 }
@@ -143,5 +142,6 @@ resource "aws_route_table_association" "mgmt-subnet-association" {
   count = length(var.poc-mgmt-subnets)
   subnet_id = element(aws_subnet.poc-mgmt-subnets.*.id, count.index )
   route_table_id = aws_route_table.poc-mgmt-rt.id
+  depends_on = [aws_route_table.poc-mgmt-rt, aws_subnet.poc-mgmt-subnets]
 }
 
