@@ -1,5 +1,5 @@
 ## Steps
- 1.  Create **CO-PoC-VPC** with **10.252.0.0/20** CIDR <br> 
+ 1.  Create **CO-PoC-VPC** with **10.252.0.0/20** and **100.64.0.0/24** CIDR blocks <br> 
  2.  Create **8x Private, 2x Public and 4x MGMT Subnets** in two Availability Zones.<br>
  3.  Create 3x **Routing Tables** and associate them with **Private**, **Public** and **MGMT** subnets <br> 
  4.  Create 1x **Internet Gateway** for Public Subnets <br> 
