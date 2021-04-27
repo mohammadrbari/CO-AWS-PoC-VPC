@@ -22,3 +22,4 @@
 
 ## Design 
 
+![2021-04-22-CO-AWS-PoC Infrastructure-v2 2-Build ](https://user-images.githubusercontent.com/44865421/116217814-dbf65980-a741-11eb-88f2-d030185e21a2.png)
