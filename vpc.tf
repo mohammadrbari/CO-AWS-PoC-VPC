@@ -131,7 +131,7 @@ resource "aws_route_table_association" "public-subnet-association" {
   subnet_id      = element(aws_subnet.poc-public-subnets.*.id , count.index)
   route_table_id = aws_route_table.poc-public-rt.id
 }
-
+# Private subnet association
 resource "aws_route_table_association" "private-subnet-association" {
   count          = length(var.poc-private-subnets)
   subnet_id      = element(aws_subnet.poc-private-subnets.*.id , count.index)
