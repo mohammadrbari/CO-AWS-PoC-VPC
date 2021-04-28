@@ -8,6 +8,9 @@ resource "aws_vpc" "co-poc-vpc" {
 resource "aws_vpc_ipv4_cidr_block_association" "additional-cidr-vpc" {
   cidr_block = var.additional-cidr-vpc
   vpc_id = aws_vpc.co-poc-vpc.id
+  lifecycle {
+    create_before_destroy = true
+  }
 }
 
 # Step 2: Create Private, Public and MGMT Subnets
@@ -40,7 +43,7 @@ resource "aws_subnet" "poc-mgmt-subnets" {
   count = length(var.poc-mgmt-subnets)
   cidr_block = element(var.poc-mgmt-subnets, count.index )
   availability_zone = element(var.azs , count.index )
-
+ depends_on = [aws_vpc_ipv4_cidr_block_association.additional-cidr-vpc]
   tags = {
 
     Name = "PoC-MGMT-SN-${count.index+1}"
