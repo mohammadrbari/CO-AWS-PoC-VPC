@@ -8,15 +8,11 @@ resource "aws_vpc" "co-poc-vpc" {
 resource "aws_vpc_ipv4_cidr_block_association" "additional-cidr-vpc" {
   cidr_block = var.additional-cidr-vpc
   vpc_id = aws_vpc.co-poc-vpc.id
-  lifecycle {
-    create_before_destroy = true
-  }
 }
 
 # Step 2: Create Private, Public and MGMT Subnets
 resource "aws_subnet" "poc-private-subnets" {
   vpc_id = aws_vpc.co-poc-vpc.id
-  #count = length(var.azs)
   count = length(var.poc-private-subnets)
   cidr_block = element(var.poc-private-subnets , count.index)
   availability_zone = element(var.azs , count.index)
@@ -85,7 +81,6 @@ resource "aws_internet_gateway" "poc-igw" {
   }
 }
 
-
 # Step 5: Create 2xEIPs to use in NAT Gateway
 resource "aws_eip" "nat-eip" {
   #count    = length(var.azs)
@@ -96,7 +91,6 @@ resource "aws_eip" "nat-eip" {
     Name = "NGW-EIP--${count.index+1}"
   }
 }
-
 
 # Step 5.1: Create 1x NAT Gateway
 resource "aws_nat_gateway" "poc-nat-gateway" {
@@ -139,7 +133,6 @@ resource "aws_route_table_association" "private-subnet-association" {
   subnet_id      = element(aws_subnet.poc-private-subnets.*.id , count.index)
   route_table_id = aws_route_table.poc-private-rt.id
 }
-
 
 resource "aws_route_table_association" "mgmt-subnet-association" {
   count = length(var.poc-mgmt-subnets)
