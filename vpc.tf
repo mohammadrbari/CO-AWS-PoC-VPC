@@ -120,6 +120,14 @@ resource "aws_route" "add-defaultroute-private-rt" {
   destination_cidr_block    = element(var.default-route , count.index)
   gateway_id                = aws_nat_gateway.poc-nat-gateway[count.index].id
 }
+#Step 6.2: Add Default Routes to route table CO-PoC-MGMT towards NGW
+
+resource "aws_route" "add-defaultroute-private-mgmt-rt" {
+  count                     = 1
+  route_table_id            = aws_route_table.poc-mgmt-rt.id
+  destination_cidr_block    = element(var.default-route , count.index)
+  gateway_id                = aws_nat_gateway.poc-nat-gateway[count.index].id
+}
 
 #Step 7: Route Table association of public,private and mgmt subnets
 resource "aws_route_table_association" "public-subnet-association" {
